@@ -1,7 +1,7 @@
 import { Dimensions } from 'react-native'
 
 export default {
-    baseURL: "https://nft-staging.test-development.work",
+    baseURL: "http://bv.qltbyt.com/api",
     onesignalKey: "",
     color: {
         main: '#2A238E',
@@ -47,7 +47,9 @@ export default {
         Message: 'Message',
         Login: 'Login',
         EquipmentList: 'EquipmentList',
-        StaffList: 'StaffList'
+        StaffList: 'StaffList',
+        EquipmentDetails: 'EquipmentDetails',
+        DepartmentList: 'DepartmentList'
     },
     dateFormat: {
         default: 'dd-MM-yyyy',
@@ -73,7 +75,8 @@ export default {
         {
             title: 'Tổ chức',
             icon: require('../assets/images/ic_organization.png'),
-            color: '#ff845e'
+            color: '#ff845e',
+            screen: 'DepartmentList'
         },
         {
             title: 'Nhân viên',

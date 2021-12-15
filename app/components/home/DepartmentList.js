@@ -5,35 +5,36 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import APIManager from '../../controller/APIManager'
 import EquipmentItem from './components/EquipmentItem'
 import RNProgressHud from 'progress-hud'
+import DepartmentItem from './components/DepartmentItem'
 
-const EquipmentList = () => {
+const DepartmentList = () => {
 
     const navigation = useNavigation()
-    const [equipments, setEquipments] = useState([])
+    const [departments, setDepartments] = useState([])
 
-    const getAllEquipments = () => {
+    const getAllDepartments = () => {
         RNProgressHud.show()
-        APIManager.getAllEquipments()
-            .then(equipments => setEquipments(equipments))
+        APIManager.getAllDepartments()
+            .then(departments => setDepartments(departments))
             .catch(error => alert(error?.message))
             .finally(() => RNProgressHud.dismiss())
     }
 
     useEffect(() => {
-        getAllEquipments()
+        getAllDepartments()
     }, [])
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            title: 'Thiết bị'
+            title: 'Khoa phòng'
         })
     }, [])
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <FlatList
-                data={equipments}
-                renderItem={({ item }) => <EquipmentItem item={item} />}
+                data={departments}
+                renderItem={({ item }) => <DepartmentItem item={item} />}
                 keyExtractor={(item) => item?.id}
                 contentContainerStyle={{
                     paddingTop: 12
@@ -43,7 +44,7 @@ const EquipmentList = () => {
     )
 }
 
-export default EquipmentList
+export default DepartmentList
 
 const styles = StyleSheet.create({
 

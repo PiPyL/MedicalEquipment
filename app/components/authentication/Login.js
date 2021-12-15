@@ -4,16 +4,28 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Constant from '../../controller/Constant'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useNavigation, StackActions } from '@react-navigation/core'
+import APIManager from '../../controller/APIManager'
+import RNProgressHud from 'progress-hud';
 
 const Login = () => {
 
     const navigation = useNavigation()
     const [isView, setIsView] = useState(false)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
-    const onTapLogin = () => {
+    const showHomeScreen = () => {
         navigation.dispatch(
             StackActions.replace(Constant.nameScreen.TabBar)
         )
+    }
+
+    const onTapLogin = () => {
+        RNProgressHud.show()
+        APIManager.login(email, password)
+            .then(showHomeScreen)
+            .catch(error => alert(error?.message))
+            .finally(() => RNProgressHud.dismiss())
     }
 
     return (
@@ -36,6 +48,8 @@ const Login = () => {
                     placeholder='Nhập email'
                     style={styles.emailInput}
                     keyboardType='email-address'
+                    value={email}
+                    onChangeText={text => setEmail(text)}
                 />
             </View>
             <View style={styles.passwordView}>
@@ -46,6 +60,8 @@ const Login = () => {
                     placeholder='Nhập mật khẩu'
                     style={styles.passwordInput}
                     secureTextEntry={!isView}
+                    value={password}
+                    onChangeText={text => setPassword(text)}
                 />
                 <TouchableOpacity
                     onPress={() => setIsView(!isView)}

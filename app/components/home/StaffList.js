@@ -1,14 +1,28 @@
 import { useNavigation } from '@react-navigation/core'
-import React, { useLayoutEffect } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Constant from '../../controller/Constant'
+import APIManager from '../../controller/APIManager'
 import StaffItem from './components/StaffItem'
+import RNProgressHud from 'progress-hud'
 
 const StaffList = () => {
 
     const navigation = useNavigation()
+    const [staffs, setStaffs] = useState([])
+
+    const getAllUser = () => {
+        RNProgressHud.show()
+        APIManager.getAllUser()
+            .then(staffs => setStaffs(staffs))
+            .catch(error => alert(error?.message))
+            .finally(() => RNProgressHud.dismiss())
+    }
+
+    useEffect(() => {
+        getAllUser()
+    }, [])
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -19,7 +33,7 @@ const StaffList = () => {
     return (
         <SafeAreaView>
             <FlatList
-                data={Constant.staffData}
+                data={staffs}
                 renderItem={({ item }) => <StaffItem item={item} />}
                 keyExtractor={(item) => item?.name}
                 contentContainerStyle={{

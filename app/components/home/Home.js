@@ -3,6 +3,7 @@ import React, { useLayoutEffect } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import AppManager from '../../controller/AppManager'
 import Constant from '../../controller/Constant'
 import CategoryItem from './components/CategoryItem'
 

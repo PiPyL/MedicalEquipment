@@ -1,29 +1,42 @@
+import { StackActions, useNavigation } from '@react-navigation/native'
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import Constant from '../../../controller/Constant'
 
 const heightItem = 100
 
-const EquipmentItem = () => {
+const EquipmentItem = ({ item }) => {
+
+    const navigation = useNavigation()
+
+    const showEquipmentDetails = () => {
+        navigation.dispatch(
+            StackActions.push(Constant.nameScreen.EquipmentDetails, { equipmentId: item?.id })
+        )
+    }
+
     return (
-        <View style={styles.contentView}>
+        <TouchableOpacity
+            activeOpacity={1}
+            onPress={showEquipmentDetails}
+            style={styles.contentView}>
             <FastImage
                 resizeMode='contain'
                 source={require('../../../assets/images/img_noi_soi.jpeg')}
                 style={styles.image} />
             <View style={styles.infoView}>
                 <Text style={styles.name}>
-                    Thiết bị nội soi nhập khẩu Hàn Quốc, chất lượng cao
+                    {item?.title}
                 </Text>
                 <Text style={styles.model}>
-                    Model: SOMATOM go.Now (11061618) asdjaskhd ashkas d
+                    {`Model: ${item?.model}`}
                 </Text>
                 <Text style={styles.serial}>
-                    Serial: 107462
+                    {`Serial: ${item?.serial}`}
                 </Text>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
