@@ -29,7 +29,7 @@ const Login = () => {
     }
 
     return (
-        <SafeAreaView style={{ backgroundColor: 'white' }}>
+        <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
             <Image
                 source={require('../../assets/images/img_logo.png')}
                 style={styles.logo}
@@ -41,9 +41,6 @@ const Login = () => {
                 Bệnh viện Kiến An
             </Text>
             <View style={styles.emailView}>
-                {/* <Text style={styles.title}>
-                    Email
-                </Text> */}
                 <TextInput
                     placeholder='Nhập email'
                     style={styles.emailInput}
@@ -53,9 +50,6 @@ const Login = () => {
                 />
             </View>
             <View style={styles.passwordView}>
-                {/* <Text style={styles.title}>
-                    Mật khẩu
-                </Text> */}
                 <TextInput
                     placeholder='Nhập mật khẩu'
                     style={styles.passwordInput}

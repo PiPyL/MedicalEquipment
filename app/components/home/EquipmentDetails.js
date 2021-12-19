@@ -1,18 +1,26 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import APIManager from '../../controller/APIManager'
 import Constant from '../../controller/Constant'
 import RNProgressHud from 'progress-hud'
-import { useNavigation, useRoute } from '@react-navigation/native'
+import { StackActions, useNavigation, useRoute } from '@react-navigation/native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const EquipmentDetails = () => {
 
     const navigation = useNavigation()
     const route = useRoute()
+    const screen = route.params?.screen ?? ''
     const equipmentId = route.params?.equipmentId ?? ''
     const [equipment, setEquipment] = useState()
+
+    const onRequestError = () => {
+        navigation.dispatch(
+            StackActions.push(Constant.nameScreen.ErrorInfoInput, { id: equipmentId, name: equipment?.title })
+        )
+    }
 
     const getAEquipment = () => {
         if (equipmentId === '') {
@@ -31,21 +39,33 @@ const EquipmentDetails = () => {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            title: equipment?.title
+            title: 'Thiết bị',
+            headerRight: () => <TouchableOpacity onPress={onRequestError}>
+                <Ionicons
+                    name='alert-circle-outline'
+                    size={22}
+                />
+            </TouchableOpacity>
         })
     }, [equipment])
+
+    const getStatus = () => {
+        const list = Constant.equipmentStatus.filter(e => e?.key?.toLowerCase() === equipment?.status?.toLowerCase())
+        console.log(list)
+        if (list.length > 0) {
+            return list[0]?.value
+        }
+        return ''
+    }
 
     return (
         <SafeAreaView style={styles.rootView}>
             <FastImage
-                source={require('../../assets/images/img_noi_soi.jpeg')}
+                source={{ uri: equipment?.urlImg }}
                 style={styles.image}
                 resizeMode='cover'
             />
             <View style={styles.infoView}>
-                {/* <Text>
-                    Tên thiết bị
-                </Text> */}
                 <Text style={styles.name}>
                     {equipment?.title}
                 </Text>
@@ -54,6 +74,9 @@ const EquipmentDetails = () => {
                 </Text>
                 <Text style={styles.title}>
                     Serial: <Text style={styles.value}>{equipment?.serial}</Text>
+                </Text>
+                <Text style={styles.title}>
+                    Trạng thái: <Text style={styles.value}>{getStatus()}</Text>
                 </Text>
                 <Text style={styles.title}>
                     Năm sản xuất: <Text style={styles.value}>{equipment?.year_manufacture}</Text>

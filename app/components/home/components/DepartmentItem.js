@@ -10,13 +10,6 @@ const DepartmentItem = ({ item }) => {
         Linking.openURL(`tel:${item?.phone}`)
     }
 
-    const getAvatar = () => {
-        if (item?.profile_photo_url) {
-            return { uri: item?.profile_photo_url }
-        }
-        return require('../../../assets/images/img_staff.jpeg')
-    }
-
     return (
         <View style={styles.contentView}>
             <Text style={styles.title}>

@@ -6,24 +6,25 @@ import Constant from '../../../controller/Constant'
 
 const heightItem = 100
 
-const EquipmentItem = ({ item }) => {
+const EquipmentItem = ({ item, onPress }) => {
 
-    const navigation = useNavigation()
-
-    const showEquipmentDetails = () => {
-        navigation.dispatch(
-            StackActions.push(Constant.nameScreen.EquipmentDetails, { equipmentId: item?.id })
-        )
+    const getStatus = () => {
+        const list = Constant.equipmentStatus.filter(e => e?.key?.toLowerCase() === item?.status?.toLowerCase())
+        console.log(list)
+        if (list.length > 0) {
+            return list[0]?.value
+        }
+        return ''
     }
 
     return (
         <TouchableOpacity
             activeOpacity={1}
-            onPress={showEquipmentDetails}
+            onPress={onPress}
             style={styles.contentView}>
             <FastImage
-                resizeMode='contain'
-                source={require('../../../assets/images/img_noi_soi.jpeg')}
+                resizeMode='cover'
+                source={{ uri: Constant.imageBaseURL + `/${item?.path}` }}
                 style={styles.image} />
             <View style={styles.infoView}>
                 <Text style={styles.name}>
@@ -34,6 +35,9 @@ const EquipmentItem = ({ item }) => {
                 </Text>
                 <Text style={styles.serial}>
                     {`Serial: ${item?.serial}`}
+                </Text>
+                <Text style={styles.status}>
+                    {`Trạng thái: ${getStatus()}`}
                 </Text>
             </View>
         </TouchableOpacity>
@@ -73,5 +77,10 @@ const styles = StyleSheet.create({
     serial: {
         fontSize: 12,
         color: Constant.color.text
+    },
+    status: {
+        fontSize: 12,
+        color: Constant.color.text,
+        marginTop: 2
     }
 })

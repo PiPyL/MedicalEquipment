@@ -13,6 +13,12 @@ import DepartmentList from '../home/DepartmentList';
 import StorageManager from '../../controller/StorageManager';
 import AppManager from '../../controller/AppManager';
 import UserModel from '../../model/UserModel';
+import ErrorRequest from '../home/ErrorRequest';
+import ImageScanner from '../scan/ImageScanner';
+import ErrorInfoInput from '../home/ErrorInfoInput';
+import EquipmentInventory from '../home/EquipmentInventory';
+import SuppliesList from '../home/SuppliesList';
+import EquipmentInventoryInput from '../home/EquipmentInventoryInput';
 
 const Stack = createNativeStackNavigator();
 
@@ -76,12 +82,54 @@ const RootNavigation = () => {
                             name={Constant.nameScreen.EquipmentDetails}
                             component={EquipmentDetails}
                             screenOptions={{
-                                headerShown: true
+                                headerShown: true,
                             }}
                         />
                         <Stack.Screen
                             name={Constant.nameScreen.DepartmentList}
                             component={DepartmentList}
+                        />
+                        <Stack.Screen
+                            name={Constant.nameScreen.ErrorRequest}
+                            component={ErrorRequest}
+                            options={{
+                                title: 'Báo hỏng'
+                            }}
+                        />
+                        <Stack.Screen
+                            name={Constant.nameScreen.ImageScanner}
+                            component={ImageScanner}
+                            options={{
+                                presentation: 'fullScreenModal'
+                            }}
+                        />
+                        <Stack.Screen
+                            name={Constant.nameScreen.ErrorInfoInput}
+                            component={ErrorInfoInput}
+                            options={{
+                                title: 'Báo hỏng'
+                            }}
+                        />
+                        <Stack.Screen
+                            name={Constant.nameScreen.EquipmentInventory}
+                            component={EquipmentInventory}
+                            options={{
+                                title: 'Kiểm kê'
+                            }}
+                        />
+                        <Stack.Screen
+                            name={Constant.nameScreen.SuppliesList}
+                            component={SuppliesList}
+                            options={{
+                                title: 'Vật tư'
+                            }}
+                        />
+                        <Stack.Screen
+                            name={Constant.nameScreen.EquipmentInventoryInput}
+                            component={EquipmentInventoryInput}
+                            options={{
+                                title: 'Kiểm kê'
+                            }}
                         />
                     </Stack.Navigator>
                 </NavigationContainer>

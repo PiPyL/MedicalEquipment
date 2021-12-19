@@ -1,7 +1,8 @@
 import { Dimensions } from 'react-native'
 
 export default {
-    baseURL: "http://bv.qltbyt.com/api",
+    baseURL: "http://bv.qltbyt.com/api/v1",
+    imageBaseURL: 'http://bv.qltbyt.com/uploads',
     onesignalKey: "",
     color: {
         main: '#2A238E',
@@ -49,7 +50,15 @@ export default {
         EquipmentList: 'EquipmentList',
         StaffList: 'StaffList',
         EquipmentDetails: 'EquipmentDetails',
-        DepartmentList: 'DepartmentList'
+        DepartmentList: 'DepartmentList',
+        ErrorRequest: 'ErrorRequest',
+        ImageScanner: 'ImageScanner',
+        ScannerContainer: 'ScannerContainer',
+        ErrorInfoInput: 'ErrorInfoInput',
+        EquipmentInventory: 'EquipmentInventory',
+        SuppliesList: 'SuppliesList',
+        EquipmentInventoryInput: 'EquipmentInventoryInput',
+        NotificationList: 'NotificationList'
     },
     dateFormat: {
         default: 'dd-MM-yyyy',
@@ -73,7 +82,7 @@ export default {
             screen: 'EquipmentList'
         },
         {
-            title: 'Tổ chức',
+            title: 'Khoa phòng',
             icon: require('../assets/images/ic_organization.png'),
             color: '#ff845e',
             screen: 'DepartmentList'
@@ -87,17 +96,20 @@ export default {
         {
             title: 'Vật tư',
             icon: require('../assets/images/ic_supplies.png'),
-            color: '#45d0e6'
+            color: '#45d0e6',
+            screen: 'SuppliesList'
         },
         {
             title: 'Báo hỏng',
             icon: require('../assets/images/ic_notification.png'),
-            color: '#ecadf0'
+            color: '#ecadf0',
+            screen: 'ErrorRequest'
         },
         {
             title: 'Kiểm kê',
             icon: require('../assets/images/ic_statistics.png'),
-            color: '#ff96a6'
+            color: '#ff96a6',
+            screen: 'EquipmentInventory'
         }
     ],
     staffData: [
@@ -136,6 +148,32 @@ export default {
             phone: '0555555555',
             email: 'wwwwww@gmail.com',
             type: 'Nurse'
+        }
+    ],
+    equipmentStatus: [
+        {
+            key: 'not_handed',
+            value: 'Mới'
+        },
+        {
+            key: 'active',
+            value: 'Đang sử dụng'
+        },
+        {
+            key: 'was_broken',
+            value: 'Đang báo hỏng'
+        },
+        {
+            key: 'corrected',
+            value: 'Đang sửa chữa'
+        },
+        {
+            key: 'inactive',
+            value: 'Ngừng sử dụng'
+        },
+        {
+            key: 'liquidated',
+            value: 'Đã thanh lý'
         }
     ]
 }

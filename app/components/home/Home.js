@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation, StackActions } from '@react-navigation/core'
 import React, { useLayoutEffect } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -11,6 +11,15 @@ const Home = () => {
 
     const navigation = useNavigation()
 
+    const showEquipmentList = (event) => {
+        if (event?.nativeEvent?.text === '') {
+            return
+        }
+        navigation.dispatch(
+            StackActions.push(Constant.nameScreen.EquipmentList, { keyword: event?.nativeEvent?.text })
+        )
+    }
+
     useLayoutEffect(() => {
         navigation.setOptions({
             headerShown: false
@@ -22,7 +31,9 @@ const Home = () => {
             <View style={styles.searchView}>
                 <TextInput
                     style={styles.searchInput}
-                    placeholder='Nhập để tìm kiếm...'
+                    placeholder='Nhập tên thiết bị, mã thiết bị, model, serial...'
+                    numberOfLines={1}
+                    onEndEditing={showEquipmentList}
                 />
                 <TouchableOpacity style={styles.searchButton}>
                     <Ionicons

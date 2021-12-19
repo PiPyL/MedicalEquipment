@@ -3,17 +3,20 @@ import AppManager from "./AppManager"
 import UserModel from "../model/UserModel"
 import Constant from './Constant'
 import StorageManager from './StorageManager'
+import { format } from 'date-fns'
 
 export default class APIManager {
 
     static baseURL = Constant.baseURL
 
     static endpoints = {
-        login: APIManager.baseURL + '/login',
+        login: 'http://bv.qltbyt.com/api/login',
         getAllUsers: APIManager.baseURL + '/users',
         getAllEquipments: APIManager.baseURL + '/equipments',
         getAEquipment: APIManager.baseURL + '/equipments',
-        getAllDepartments: APIManager.baseURL + '/departments'
+        getAllDepartments: APIManager.baseURL + '/departments',
+        requestError: APIManager.baseURL + '/equipment',
+        getAllSupplies: APIManager.baseURL + '/equipments',
     }
 
     static headers = {
@@ -55,15 +58,29 @@ export default class APIManager {
         }
     }
 
-    static async getAllEquipments() {
+    static async getAllEquipments(keyword) {
         try {
             const headers = {
                 ...APIManager.headers,
                 Authorization: `Bearer ${AppManager.shared.currentUser?.access_token}`
             }
-            let response = await axios.get(APIManager.endpoints.getAllEquipments, { headers })
+            let response = await axios.get(`${APIManager.endpoints.getAllEquipments}?keyword=${keyword}`, { headers })
             const equipments = Object(response.data?.data ?? [])
             return Promise.resolve(equipments)
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+
+    static async getAllSupplies() {
+        try {
+            const headers = {
+                ...APIManager.headers,
+                Authorization: `Bearer ${AppManager.shared.currentUser?.access_token}`
+            }
+            let response = await axios.get(APIManager.endpoints.getAllSupplies, { headers })
+            const supplies = Object(response.data?.data ?? [])
+            return Promise.resolve(supplies)
         } catch (error) {
             return Promise.reject(error)
         }
@@ -87,12 +104,29 @@ export default class APIManager {
         try {
             const headers = {
                 ...APIManager.headers,
-                Authorization: 'Bearer 38|8ICDZCQbiJcDgehdYfcJZOxg1W0LRBhz64zodYN6'
-                // Authorization: `Bearer ${AppManager.shared.currentUser?.access_token}`
+                Authorization: `Bearer ${AppManager.shared.currentUser?.access_token}`
             }
             let response = await axios.get(APIManager.endpoints.getAllDepartments, { headers })
             const departments = Object(response.data?.data ?? [])
             return Promise.resolve(departments)
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+
+    static async requestError({ id, reason }) {
+        try {
+            const date_failure = format(new Date(), 'yyyy-MM-dd hh:mm')
+            const data = {
+                date_failure,
+                reason
+            }
+            const headers = {
+                ...APIManager.headers,
+                Authorization: `Bearer ${AppManager.shared.currentUser?.access_token}`
+            }
+            let response = await axios.post(`${APIManager.endpoints.requestError}/${id}`, data, { headers })
+            return Promise.resolve(response.data)
         } catch (error) {
             return Promise.reject(error)
         }

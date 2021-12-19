@@ -4,9 +4,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Constant from '../../controller/Constant';
 import Home from '../home/Home';
-import Message from '../message/Message';
-import Settings from '../settings/Settings';
 import Profile from '../profile/Profile';
+import ScannerContainer from '../scan/ScannerContainer';
+import NotificationList from '../message/NotificationList';
+import ImageScanner from '../scan/ImageScanner';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,10 +22,13 @@ const TabBarNavigation = () => {
                     if (route.name === Constant.nameScreen.Home) {
                         size = 29
                         iconName = focused ? 'home' : 'home-outline'
-                    } else if (route.name === Constant.nameScreen.Message) {
+                    } else if (route.name === Constant.nameScreen.NotificationList) {
                         iconName = focused ? 'mail' : 'mail-outline'
                     } else if (route.name === Constant.nameScreen.Settings) {
                         iconName = focused ? 'options' : 'options-outline'
+                    } else if (route.name === Constant.nameScreen.ImageScanner) {
+                        size = 29
+                        iconName = focused ? 'qr-code' : 'qr-code-outline'
                     } else {
                         size = 29
                         iconName = focused ? 'person' : 'person-outline'
@@ -52,13 +56,20 @@ const TabBarNavigation = () => {
                 component={Home}
             />
             <Tab.Screen
-                name={Constant.nameScreen.Message}
-                component={Message}
+                name={Constant.nameScreen.NotificationList}
+                component={NotificationList}
+                options={{
+                    title: 'Thông báo'
+                }}
             />
             <Tab.Screen
+                name={Constant.nameScreen.ImageScanner}
+                component={ImageScanner}
+            />
+            {/* <Tab.Screen
                 name={Constant.nameScreen.Settings}
                 component={Settings}
-            />
+            /> */}
             <Tab.Screen
                 name={Constant.nameScreen.Profile}
                 component={Profile}
