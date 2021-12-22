@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useNavigation, StackActions } from '@react-navigation/core'
 import APIManager from '../../controller/APIManager'
 import RNProgressHud from 'progress-hud';
+import { ScrollView } from 'react-native-gesture-handler'
 
 const Login = () => {
 
@@ -30,46 +31,48 @@ const Login = () => {
 
     return (
         <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
-            <Image
-                source={require('../../assets/images/img_logo.png')}
-                style={styles.logo}
-            />
-            <Text style={styles.text}>
-                Quản lý thiết bị y tế
-            </Text>
-            <Text style={styles.text}>
-                Bệnh viện Kiến An
-            </Text>
-            <View style={styles.emailView}>
-                <TextInput
-                    placeholder='Nhập email'
-                    style={styles.emailInput}
-                    keyboardType='email-address'
-                    value={email}
-                    onChangeText={text => setEmail(text)}
+            <ScrollView>
+                <Image
+                    source={require('../../assets/images/img_logo.png')}
+                    style={styles.logo}
                 />
-            </View>
-            <View style={styles.passwordView}>
-                <TextInput
-                    placeholder='Nhập mật khẩu'
-                    style={styles.passwordInput}
-                    secureTextEntry={!isView}
-                    value={password}
-                    onChangeText={text => setPassword(text)}
-                />
-                <TouchableOpacity
-                    onPress={() => setIsView(!isView)}
-                >
-                    <Ionicons name='eye' size={28} color='gray' />
-                </TouchableOpacity>
-            </View>
-            <TouchableOpacity
-                onPress={onTapLogin}
-                style={styles.loginButton}>
-                <Text style={styles.loginText}>
-                    Đăng nhập
+                <Text style={styles.text}>
+                    Quản lý thiết bị y tế
                 </Text>
-            </TouchableOpacity>
+                <Text style={styles.text}>
+                    Bệnh viện Kiến An
+                </Text>
+                <View style={styles.emailView}>
+                    <TextInput
+                        placeholder='Nhập email'
+                        style={styles.emailInput}
+                        keyboardType='email-address'
+                        value={email}
+                        onChangeText={text => setEmail(text)}
+                    />
+                </View>
+                <View style={styles.passwordView}>
+                    <TextInput
+                        placeholder='Nhập mật khẩu'
+                        style={styles.passwordInput}
+                        secureTextEntry={!isView}
+                        value={password}
+                        onChangeText={text => setPassword(text)}
+                    />
+                    <TouchableOpacity
+                        onPress={() => setIsView(!isView)}
+                    >
+                        <Ionicons name={isView ? 'eye' : 'eye-off'} size={28} color='gray' />
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity
+                    onPress={onTapLogin}
+                    style={styles.loginButton}>
+                    <Text style={styles.loginText}>
+                        Đăng nhập
+                    </Text>
+                </TouchableOpacity>
+            </ScrollView>
         </SafeAreaView>
     )
 }

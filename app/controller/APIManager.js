@@ -114,7 +114,7 @@ export default class APIManager {
         }
     }
 
-    static async requestError({ id, reason }) {
+    static async requestError(id, reason) {
         try {
             const date_failure = format(new Date(), 'yyyy-MM-dd hh:mm')
             const data = {
@@ -125,7 +125,12 @@ export default class APIManager {
                 ...APIManager.headers,
                 Authorization: `Bearer ${AppManager.shared.currentUser?.access_token}`
             }
-            let response = await axios.post(`${APIManager.endpoints.requestError}/${id}`, data, { headers })
+            console.log(headers)
+            console.log(data)
+            const url = `${APIManager.endpoints.requestError}/${id}`
+            console.log(url)
+            let response = await axios.post(url, data, { headers })
+            console.log(response.data)
             return Promise.resolve(response.data)
         } catch (error) {
             return Promise.reject(error)

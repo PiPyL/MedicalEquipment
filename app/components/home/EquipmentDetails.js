@@ -51,7 +51,6 @@ const EquipmentDetails = () => {
 
     const getStatus = () => {
         const list = Constant.equipmentStatus.filter(e => e?.key?.toLowerCase() === equipment?.status?.toLowerCase())
-        console.log(list)
         if (list.length > 0) {
             return list[0]?.value
         }

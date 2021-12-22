@@ -17,17 +17,28 @@ const ImageScanner = () => {
     const isScanTabbar = route.params?.isScanTabbar
     const isScanning = useRef(true)
 
+    const getIDFromQRCodeResult = (text = '') => {
+        const list = text.split("---")
+        const result = list.filter(e => e.toLowerCase().includes('id:'))
+        if (result.length > 0) {
+            const id = result[0].replace("ID:", '').replace(/\s+/g, '')
+            return id
+        }
+        return null
+    }
+
     const isNumberOnly = (str) => {
         const pattern = /^\d+$/
         return pattern.test(str)
     }
 
     const _onBarCodeRead = (event) => {
+        console.log(event?.data)
         if (isScanning.current === true) {
-            if (event?.data != null && isNumberOnly(event?.data)) {
+            if (event?.data != null && getIDFromQRCodeResult(event?.data) != null) {
                 isScanning.current = false
                 navigation.dispatch(
-                    StackActions.push(Constant.nameScreen.EquipmentDetails, { equipmentId: event?.data })
+                    StackActions.push(Constant.nameScreen.EquipmentDetails, { equipmentId: getIDFromQRCodeResult(event?.data) })
                 )
             }
         }

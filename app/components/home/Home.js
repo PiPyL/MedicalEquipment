@@ -1,5 +1,5 @@
 import { useNavigation, StackActions } from '@react-navigation/core'
-import React, { useLayoutEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Ionicons from 'react-native-vector-icons/Ionicons'
