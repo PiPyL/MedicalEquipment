@@ -55,7 +55,13 @@ const EquipmentList = () => {
         RNProgressHud.show()
         APIManager.getAllEquipments(keyword)
             .then(equipments => {
-                setEquipments(equipments)
+                console.log(equipments)
+                if (screen == Constant.nameScreen.ErrorRequest) {
+                    const list = equipments.filter(e => e?.status?.toLowerCase() === 'active')
+                    setEquipments(list)
+                } else {
+                    setEquipments(equipments)
+                }
                 equipmentsRoot.current = equipments
             })
             .catch(error => alert(error?.message))

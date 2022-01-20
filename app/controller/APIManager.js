@@ -40,6 +40,7 @@ export default class APIManager {
             }
             return Promise.reject(new Error('Đã có lỗi xảy ra!'))
         } catch (error) {
+            console.log(error)
             return Promise.reject(error)
         }
     }

@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import APIManager from '../../controller/APIManager'
@@ -22,13 +22,26 @@ const EquipmentDetails = () => {
         )
     }
 
+    const onGetSuccess = (equipment) => {
+        if (equipment == undefined) {
+            Alert.alert('Thông báo', 'Không thể tìm thấy thiết bị!', [
+                {
+                    text: 'OK',
+                    onPress: () => navigation.goBack()
+                }
+            ])
+        } else {
+            setEquipment(equipment)
+        }
+    }
+
     const getAEquipment = () => {
         if (equipmentId === '') {
             return
         }
         RNProgressHud.show()
         APIManager.getAEquipment(equipmentId)
-            .then(equipment => setEquipment(equipment))
+            .then(onGetSuccess)
             .catch(error => alert(error?.message))
             .finally(() => RNProgressHud.dismiss())
     }
@@ -38,15 +51,21 @@ const EquipmentDetails = () => {
     }, [])
 
     useLayoutEffect(() => {
-        navigation.setOptions({
-            title: 'Thiết bị',
-            headerRight: () => <TouchableOpacity onPress={onRequestError}>
-                <Ionicons
-                    name='alert-circle-outline'
-                    size={22}
-                />
-            </TouchableOpacity>
-        })
+        if (equipment?.status.toLowerCase() === 'active') {
+            navigation.setOptions({
+                title: 'Thiết bị',
+                headerRight: () => <TouchableOpacity onPress={onRequestError}>
+                    <Ionicons
+                        name='alert-circle-outline'
+                        size={22}
+                    />
+                </TouchableOpacity>
+            })
+        } else {
+            navigation.setOptions({
+                title: 'Thiết bị'
+            })
+        }
     }, [equipment])
 
     const getStatus = () => {
